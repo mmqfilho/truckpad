@@ -1,4 +1,5 @@
 # coding: utf-8
+import sys, getopt
 from flask import Flask, request
 from flask_mysqldb import MySQL
 
@@ -59,5 +60,17 @@ def atualiza_motorista(cnh):
         mysql.connection.rollback()
         return {'msg':'Ocorreu um erro ao fazer o cadastrado'}, 500, {"Content-Type": "application/json"}
  
- 
-app.run(debug=True, use_reloader=True)
+## verifica argumentos 
+try:
+    opts, argv = getopt.getopt(sys.argv[1:], 'p:v', ["port="])
+    port = 5000
+    for opt, val in opts:
+        if opt in ('-p', '--port'):
+            port = val
+
+except getopt.GetoptError as err:
+    print(err)
+    sys.exit()
+
+# executa API    
+app.run(debug=True, use_reloader=True, port=port)

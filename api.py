@@ -18,7 +18,7 @@ mysql = MySQL(app)
 def index():
     return {'msg':'API teste Truckpad'}, 200, {"Content-Type": "application/json"}
     
-@app.route('/motorista/', methods=['POST']):
+@app.route('/motorista/', methods=['POST'])
 def cadastro_motorista():
     try:
         dados = request.form
@@ -39,7 +39,7 @@ def cadastro_motorista():
         mysql.connection.rollback()
         return {'msg':'Ocorreu um erro ao fazer o cadastrado'}, 500, {"Content-Type": "application/json"}
     
-@app.route('/motorista/<cnh>', methods=['PUT']):
+@app.route('/motorista/<cnh>', methods=['PUT'])
 def atualiza_motorista(cnh):
     try:
         dados = request.form

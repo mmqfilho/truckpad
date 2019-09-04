@@ -1,14 +1,14 @@
 CREATE DATABASE `truckpad` /*!40100 DEFAULT CHARACTER SET latin1 */;
 
 CREATE TABLE `tipo_caminhao` (
-  `tipo_caminhao_id` int(2) NOT NULL,
+  `tipo_caminhao_id` int(2) NOT NULL AUTO_INCREMENT,
   `tipo_caminhao_nome` varchar(45) NOT NULL,
   PRIMARY KEY (`tipo_caminhao_id`),
   UNIQUE KEY `tipo_caminhao_nome_UNIQUE` (`tipo_caminhao_nome`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 CREATE TABLE `tipo_cnh` (
-  `tipo_cnh_id` int(2) NOT NULL,
+  `tipo_cnh_id` int(2) NOT NULL AUTO_INCREMENT,
   `tipo_cnh_nome` varchar(2) NOT NULL,
   PRIMARY KEY (`tipo_cnh_id`),
   UNIQUE KEY `tipo_cnh_nome_UNIQUE` (`tipo_cnh_nome`)
@@ -45,10 +45,8 @@ CREATE TABLE `trajetos` (
   CONSTRAINT `fk_traj_tipo_cam` FOREIGN KEY (`tipo_caminhao`) REFERENCES `tipo_caminhao` (`tipo_caminhao_id`) ON DELETE NO ACTION ON UPDATE NO ACTION
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
-INSERT INTO `truckpad`.`tipo_caminhao` (`tipo_caminhao_id`, `tipo_caminhao_nome`)
-VALUES (null, 'Caminhão 3/4'), (null, 'Caminhão Toco'), (null, 'Caminhão Truck'),
-(null, 'Carreta Simples'), (null, 'Carreta Eixo Extendido');
+INSERT INTO `truckpad`.`tipo_caminhao` (`tipo_caminhao_nome`)
+VALUES ('Caminhão 3/4'), ('Caminhão Toco'), ('Caminhão Truck'), ('Carreta Simples'), ('Carreta Eixo Extendido');
 
-INSERT INTO `truckpad`.`tipo_cnh` (`tipo_cnh_id`, `tipo_cnh_nome`)
-VALUES (null, 'A'), (null, 'B'), (null, 'C'), (null, 'D'), (null, 'E'), (null, 'AB'),
-(null, 'AC'), (null, 'AD'), (null, 'AE');
+INSERT INTO `truckpad`.`tipo_cnh` (`tipo_cnh_nome`)
+VALUES ('A'), ('B'), ('C'), ('D'), ('E'), ('AB'), ('AC'), ('AD'), ('AE');

@@ -1,0 +1,343 @@
+{
+	"info": {
+		"_postman_id": "8c635648-20e4-43c3-8828-ebd9f41177c0",
+		"name": "truckpad",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "/",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://127.0.0.1:5000/",
+					"protocol": "http",
+					"host": [
+						"127",
+						"0",
+						"0",
+						"1"
+					],
+					"port": "5000",
+					"path": [
+						""
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "/tipocnh",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://127.0.0.1:5000/tipocnh/",
+					"protocol": "http",
+					"host": [
+						"127",
+						"0",
+						"0",
+						"1"
+					],
+					"port": "5000",
+					"path": [
+						"tipocnh",
+						""
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "/tipocaminhao",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://127.0.0.1:5000/tipocaminhao/",
+					"protocol": "http",
+					"host": [
+						"127",
+						"0",
+						"0",
+						"1"
+					],
+					"port": "5000",
+					"path": [
+						"tipocaminhao",
+						""
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "/motoristas",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://127.0.0.1:5000/motoristas",
+					"protocol": "http",
+					"host": [
+						"127",
+						"0",
+						"0",
+						"1"
+					],
+					"port": "5000",
+					"path": [
+						"motoristas"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "/motorista",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"name": "Content-Type",
+						"value": "application/x-www-form-urlencoded",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "urlencoded",
+					"urlencoded": [
+						{
+							"key": "cnh",
+							"value": "",
+							"type": "text"
+						},
+						{
+							"key": "nome",
+							"value": "",
+							"type": "text"
+						},
+						{
+							"key": "nascimento",
+							"value": "",
+							"type": "text"
+						},
+						{
+							"key": "sexo",
+							"value": "",
+							"type": "text"
+						},
+						{
+							"key": "tipo_cnh",
+							"value": "",
+							"type": "text"
+						},
+						{
+							"key": "possui_veiculo",
+							"value": "",
+							"type": "text"
+						}
+					]
+				},
+				"url": {
+					"raw": "http://127.0.0.1:5000/motorista",
+					"protocol": "http",
+					"host": [
+						"127",
+						"0",
+						"0",
+						"1"
+					],
+					"port": "5000",
+					"path": [
+						"motorista"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "/motorista/<cnh>",
+			"request": {
+				"method": "PUT",
+				"header": [
+					{
+						"key": "Content-Type",
+						"name": "Content-Type",
+						"value": "application/x-www-form-urlencoded",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "urlencoded",
+					"urlencoded": [
+						{
+							"key": "nome",
+							"value": "",
+							"type": "text"
+						},
+						{
+							"key": "nascimento",
+							"value": "",
+							"type": "text"
+						},
+						{
+							"key": "sexo",
+							"value": "",
+							"type": "text"
+						},
+						{
+							"key": "tipo_cnh",
+							"value": "",
+							"type": "text"
+						},
+						{
+							"key": "possui_veiculo",
+							"value": "",
+							"type": "text"
+						}
+					]
+				},
+				"url": {
+					"raw": "http://127.0.0.1:5000/motorista/<cnh>",
+					"protocol": "http",
+					"host": [
+						"127",
+						"0",
+						"0",
+						"1"
+					],
+					"port": "5000",
+					"path": [
+						"motorista",
+						"<cnh>"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "/motorista/<cnh>",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://127.0.0.1:5000/motorista/<cnh>",
+					"protocol": "http",
+					"host": [
+						"127",
+						"0",
+						"0",
+						"1"
+					],
+					"port": "5000",
+					"path": [
+						"motorista",
+						"<cnh>"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "/trajeto",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"name": "Content-Type",
+						"value": "application/x-www-form-urlencoded",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "urlencoded",
+					"urlencoded": [
+						{
+							"key": "cnh",
+							"value": "",
+							"type": "text"
+						},
+						{
+							"key": "data",
+							"value": "",
+							"type": "text"
+						},
+						{
+							"key": "tipo_caminhao",
+							"value": "",
+							"type": "text"
+						},
+						{
+							"key": "carregado",
+							"value": "",
+							"type": "text"
+						},
+						{
+							"key": "lat_origem",
+							"value": "",
+							"type": "text"
+						},
+						{
+							"key": "lng_origem",
+							"value": "",
+							"type": "text"
+						},
+						{
+							"key": "lat_destino",
+							"value": "",
+							"type": "text"
+						},
+						{
+							"key": "lng_destino",
+							"value": "",
+							"type": "text"
+						}
+					]
+				},
+				"url": {
+					"raw": "http://127.0.0.1:5000/trajeto/",
+					"protocol": "http",
+					"host": [
+						"127",
+						"0",
+						"0",
+						"1"
+					],
+					"port": "5000",
+					"path": [
+						"trajeto",
+						""
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "/trajetos",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://127.0.0.1:5000/trajetos",
+					"protocol": "http",
+					"host": [
+						"127",
+						"0",
+						"0",
+						"1"
+					],
+					"port": "5000",
+					"path": [
+						"trajetos"
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}

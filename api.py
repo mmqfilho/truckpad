@@ -2,22 +2,23 @@
 import sys, getopt, datetime, googlemaps, json
 from flask import Flask, request, jsonify
 from flask_mysqldb import MySQL
+from config import *
 
 app = Flask('truckpad')
 
 ## Dados de acesso ao DB ##
 ###########################
-app.config['MYSQL_HOST'] = 'localhost'
-app.config['MYSQL_USER'] = 'root'
-app.config['MYSQL_PASSWORD'] = ''
-app.config['MYSQL_DB'] = 'truckpad'
+app.config['MYSQL_HOST'] = HOST
+app.config['MYSQL_USER'] = USER
+app.config['MYSQL_PASSWORD'] = PASSWORD
+app.config['MYSQL_DB'] = DATABASE
 
 mysql = MySQL(app)
 
 ## Google API ##
 ################
 def dados_endereco(endereco):
-    gmaps = googlemaps.Client(key='')
+    gmaps = googlemaps.Client(key=GOOGLE_KEY)
     geocode_result = gmaps.geocode(endereco)
     return geocode_result
 
@@ -301,8 +302,21 @@ def relatorios_retornovazio():
 #def relatorios_carregados():
 
 # Relatório de origem e destino agrupado por tipo de caminhao
-#@app.route('/relatorios/origemdestino', methods=['GET'])
-#def relatorios_origemdestino():
+@app.route('/relatorios/origemdestino', methods=['GET'])
+def relatorios_origemdestino():
+    ret = []
+    cur = mysql.connection.cursor()
+    query = """SELECT t.trajetos_id, t.trajetos_data, t.trajetos_origem, t.trajetos_destino, tc.tipo_caminhao_nome, tc.tipo_caminhao_id
+                 FROM trajetos t
+                 JOIN tipo_caminhao tc ON (tc.tipo_caminhao_id = t.tipo_caminhao)
+                GROUP BY tc.tipo_caminhao_nome, t.trajetos_data, t.trajetos_id"""
+    cur.execute(query)
+    dados = cur.fetchall()
+
+    for d in dados:
+        ret.append({'trajetos_id': d[0], 'tipo_caminhao_nome': d[4], 'trajetos_data':d[1], 'trajetos_origem': d[2], 'trajetos_destino': d[3]})
+
+    return jsonify({'dados': ret, 'total': len(dados)}), 200, {"Content-Type": "application/json"}
 
 ## Verifica argumentos de linha de comando ##
 #############################################
@@ -319,3 +333,4 @@ except getopt.GetoptError as err:
 ## Executa API ##
 #################
 app.run(debug=True, use_reloader=True, port=port)
+

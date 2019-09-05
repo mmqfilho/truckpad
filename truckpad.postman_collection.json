@@ -1,6 +1,6 @@
 {
 	"info": {
-		"_postman_id": "8c635648-20e4-43c3-8828-ebd9f41177c0",
+		"_postman_id": "cfc8c244-4726-4f87-8230-375507dead66",
 		"name": "truckpad",
 		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
 	},
@@ -278,22 +278,12 @@
 							"type": "text"
 						},
 						{
-							"key": "lat_origem",
+							"key": "endereco_origem",
 							"value": "",
 							"type": "text"
 						},
 						{
-							"key": "lng_origem",
-							"value": "",
-							"type": "text"
-						},
-						{
-							"key": "lat_destino",
-							"value": "",
-							"type": "text"
-						},
-						{
-							"key": "lng_destino",
+							"key": "endereco_destino",
 							"value": "",
 							"type": "text"
 						}
@@ -334,6 +324,52 @@
 					"port": "5000",
 					"path": [
 						"trajetos"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "/relatorios/totais",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://127.0.0.1:5000/relatorios/totais",
+					"protocol": "http",
+					"host": [
+						"127",
+						"0",
+						"0",
+						"1"
+					],
+					"port": "5000",
+					"path": [
+						"relatorios",
+						"totais"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "/relatorios/retornovazio",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://127.0.0.1:5000/relatorios/retornovazio",
+					"protocol": "http",
+					"host": [
+						"127",
+						"0",
+						"0",
+						"1"
+					],
+					"port": "5000",
+					"path": [
+						"relatorios",
+						"retornovazio"
 					]
 				}
 			},

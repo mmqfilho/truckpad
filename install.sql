@@ -34,16 +34,21 @@ CREATE TABLE `trajetos` (
   `trajetos_data` date NOT NULL,
   `tipo_caminhao` int(2) NOT NULL,
   `trajetos_esta_carregado` enum('S','N') DEFAULT 'N',
+  `trajetos_origem` varchar(255) NOT NULL,
   `trajetos_lat_origem` varchar(200) NOT NULL,
   `trajetos_lng_origem` varchar(200) NOT NULL,
+  `trajetos_destino` varchar(255) NOT NULL,
   `trajetos_lat_destino` varchar(200) NOT NULL,
   `trajetos_lng_destino` varchar(200) NOT NULL,
+  `trajetos_origem_google` varchar(255) DEFAULT NULL,
+  `trajetos_destino_google` varchar(255) DEFAULT NULL,
   PRIMARY KEY (`trajetos_id`),
   KEY `fk_traj_mot_idx` (`motoristas_id`),
   KEY `fk_traj_tipo_cam_idx` (`tipo_caminhao`),
   CONSTRAINT `fk_traj_mot` FOREIGN KEY (`motoristas_id`) REFERENCES `motoristas` (`motoristas_id`) ON DELETE NO ACTION ON UPDATE NO ACTION,
   CONSTRAINT `fk_traj_tipo_cam` FOREIGN KEY (`tipo_caminhao`) REFERENCES `tipo_caminhao` (`tipo_caminhao_id`) ON DELETE NO ACTION ON UPDATE NO ACTION
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=latin1;
+
 
 INSERT INTO `truckpad`.`tipo_caminhao` (`tipo_caminhao_nome`)
 VALUES ('Caminhão 3/4'), ('Caminhão Toco'), ('Caminhão Truck'), ('Carreta Simples'), ('Carreta Eixo Extendido');

@@ -1,6 +1,6 @@
 {
 	"info": {
-		"_postman_id": "cfc8c244-4726-4f87-8230-375507dead66",
+		"_postman_id": "81701df3-9c7f-4509-859b-926dd42768e0",
 		"name": "truckpad",
 		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
 	},
@@ -370,6 +370,29 @@
 					"path": [
 						"relatorios",
 						"retornovazio"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "/relatorios/origemdestino",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://127.0.0.1:5000/relatorios/origemdestino",
+					"protocol": "http",
+					"host": [
+						"127",
+						"0",
+						"0",
+						"1"
+					],
+					"port": "5000",
+					"path": [
+						"relatorios",
+						"origemdestino"
 					]
 				}
 			},

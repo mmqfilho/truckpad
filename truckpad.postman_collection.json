@@ -1,6 +1,6 @@
 {
 	"info": {
-		"_postman_id": "81701df3-9c7f-4509-859b-926dd42768e0",
+		"_postman_id": "57119fa0-c4a9-4225-8638-c9f1e6ad21f1",
 		"name": "truckpad",
 		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
 	},
@@ -29,6 +29,83 @@
 		},
 		{
 			"name": "/tipocnh",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "040eb934-0480-4659-a00e-57075b52d1f2",
+						"exec": [
+							"pm.test(\"Status code is 200\", function () {",
+							"    pm.response.to.have.status(200);",
+							"});",
+							"",
+							"pm.test(\"Resposta em json\", function () {",
+							"     pm.response.to.be.json;",
+							"});",
+							"",
+							"pm.test(\"Contem dados\", function () {",
+							"    var jsonData = pm.response.json();",
+							"    pm.expect(jsonData.dados).to.have.lengthOf(9);",
+							"});",
+							"",
+							"pm.test(\"Testando valor do ID 1 - A\", function () {",
+							"    var jsonData = pm.response.json();",
+							"    pm.expect(jsonData.dados[0].id).to.eql(1);",
+							"    pm.expect(jsonData.dados[0].nome).to.eql('A');",
+							"});",
+							"",
+							"pm.test(\"Testando valor do ID 2 - B\", function () {",
+							"    var jsonData = pm.response.json();",
+							"    pm.expect(jsonData.dados[1].id).to.eql(2);",
+							"    pm.expect(jsonData.dados[1].nome).to.eql('B');",
+							"});",
+							"",
+							"pm.test(\"Testando valor do ID 3 - C\", function () {",
+							"    var jsonData = pm.response.json();",
+							"    pm.expect(jsonData.dados[2].id).to.eql(3);",
+							"    pm.expect(jsonData.dados[2].nome).to.eql('C');",
+							"});",
+							"",
+							"pm.test(\"Testando valor do ID 4 - D\", function () {",
+							"    var jsonData = pm.response.json();",
+							"    pm.expect(jsonData.dados[3].id).to.eql(4);",
+							"    pm.expect(jsonData.dados[3].nome).to.eql('D');",
+							"});",
+							"",
+							"pm.test(\"Testando valor do ID 5 - E\", function () {",
+							"    var jsonData = pm.response.json();",
+							"    pm.expect(jsonData.dados[4].id).to.eql(5);",
+							"    pm.expect(jsonData.dados[4].nome).to.eql('E');",
+							"});",
+							"",
+							"pm.test(\"Testando valor do ID 6 - AB\", function () {",
+							"    var jsonData = pm.response.json();",
+							"    pm.expect(jsonData.dados[5].id).to.eql(6);",
+							"    pm.expect(jsonData.dados[5].nome).to.eql('AB');",
+							"});",
+							"",
+							"pm.test(\"Testando valor do ID 7 - AC\", function () {",
+							"    var jsonData = pm.response.json();",
+							"    pm.expect(jsonData.dados[6].id).to.eql(7);",
+							"    pm.expect(jsonData.dados[6].nome).to.eql('AC');",
+							"});",
+							"",
+							"pm.test(\"Testando valor do ID 8 - AD\", function () {",
+							"    var jsonData = pm.response.json();",
+							"    pm.expect(jsonData.dados[7].id).to.eql(8);",
+							"    pm.expect(jsonData.dados[7].nome).to.eql('AD');",
+							"});",
+							"",
+							"pm.test(\"Testando valor do ID 9 - AE\", function () {",
+							"    var jsonData = pm.response.json();",
+							"    pm.expect(jsonData.dados[8].id).to.eql(9);",
+							"    pm.expect(jsonData.dados[8].nome).to.eql('AE');",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
 			"request": {
 				"method": "GET",
 				"header": [],
@@ -52,6 +129,59 @@
 		},
 		{
 			"name": "/tipocaminhao",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "36d430b2-5105-4ec5-aab6-98296cf09d0d",
+						"exec": [
+							"pm.test(\"Status code is 200\", function () {",
+							"    pm.response.to.have.status(200);",
+							"});",
+							"",
+							"pm.test(\"Resposta em json\", function () {",
+							"     pm.response.to.be.json;",
+							"});",
+							"",
+							"pm.test(\"Contem dados\", function () {",
+							"    var jsonData = pm.response.json();",
+							"    pm.expect(jsonData.dados).to.have.lengthOf(5);",
+							"});",
+							"",
+							"pm.test(\"Testando valor do ID 1 - Caminhão 3/4\", function () {",
+							"    var jsonData = pm.response.json();",
+							"    pm.expect(jsonData.dados[0].id).to.eql(1);",
+							"    pm.expect(jsonData.dados[0].nome).to.eql('Caminhão 3/4');",
+							"});",
+							"",
+							"pm.test(\"Testando valor do ID 2 - Caminhão Toco\", function () {",
+							"    var jsonData = pm.response.json();",
+							"    pm.expect(jsonData.dados[1].id).to.eql(2);",
+							"    pm.expect(jsonData.dados[1].nome).to.eql('Caminhão Toco');",
+							"});",
+							"",
+							"pm.test(\"Testando valor do ID 3 - Caminhão Truck\", function () {",
+							"    var jsonData = pm.response.json();",
+							"    pm.expect(jsonData.dados[2].id).to.eql(3);",
+							"    pm.expect(jsonData.dados[2].nome).to.eql('Caminhão Truck');",
+							"});",
+							"",
+							"pm.test(\"Testando valor do ID 4 - Carreta Simples\", function () {",
+							"    var jsonData = pm.response.json();",
+							"    pm.expect(jsonData.dados[3].id).to.eql(4);",
+							"    pm.expect(jsonData.dados[3].nome).to.eql('Carreta Simples');",
+							"});",
+							"",
+							"pm.test(\"Testando valor do ID 5 - Carreta Eixo Extendido\", function () {",
+							"    var jsonData = pm.response.json();",
+							"    pm.expect(jsonData.dados[4].id).to.eql(5);",
+							"    pm.expect(jsonData.dados[4].nome).to.eql('Carreta Eixo Extendido');",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
 			"request": {
 				"method": "GET",
 				"header": [],
@@ -75,6 +205,30 @@
 		},
 		{
 			"name": "/motoristas",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "3578dc48-1437-44fb-a135-15c9a2ac8071",
+						"exec": [
+							"pm.test(\"Status code is 200\", function () {",
+							"    pm.response.to.have.status(200);",
+							"});",
+							"",
+							"pm.test(\"Resposta em json\", function () {",
+							"     pm.response.to.be.json;",
+							"});",
+							"",
+							"// Colocar o valor esperado de itens retornados",
+							"pm.test(\"Contem dados\", function () {",
+							"    var jsonData = pm.response.json();",
+							"    pm.expect(jsonData.dados).to.have.lengthOf(5);",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
 			"request": {
 				"method": "GET",
 				"header": [],
@@ -97,6 +251,24 @@
 		},
 		{
 			"name": "/motorista",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "85db7ef8-b6da-4cbd-84ba-32374d071b85",
+						"exec": [
+							"pm.test(\"Status code is 200\", function () {",
+							"    pm.response.to.have.status(200);",
+							"});",
+							"",
+							"pm.test(\"Resposta em json\", function () {",
+							"     pm.response.to.be.json;",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
 			"request": {
 				"method": "POST",
 				"header": [
@@ -161,6 +333,24 @@
 		},
 		{
 			"name": "/motorista/<cnh>",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "d9f512d6-e9f5-4bc9-bee7-aff39e02ea65",
+						"exec": [
+							"pm.test(\"Status code is 200\", function () {",
+							"    pm.response.to.have.status(200);",
+							"});",
+							"",
+							"pm.test(\"Resposta em json\", function () {",
+							"     pm.response.to.be.json;",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
 			"request": {
 				"method": "PUT",
 				"header": [
@@ -221,6 +411,29 @@
 		},
 		{
 			"name": "/motorista/<cnh>",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "04b4555e-0486-465b-b465-0b82837894d7",
+						"exec": [
+							"pm.test(\"Status code is 200\", function () {",
+							"    pm.response.to.have.status(200);",
+							"});",
+							"",
+							"pm.test(\"Resposta em json\", function () {",
+							"     pm.response.to.be.json;",
+							"});",
+							"",
+							"pm.test(\"Contem dados\", function () {",
+							"    var jsonData = pm.response.json();",
+							"    pm.expect(jsonData.dados).to.have.lengthOf(1);",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
 			"request": {
 				"method": "GET",
 				"header": [],
@@ -244,6 +457,24 @@
 		},
 		{
 			"name": "/trajeto",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "33f2f896-034d-45e8-959e-4b32e8e1568f",
+						"exec": [
+							"pm.test(\"Status code is 200\", function () {",
+							"    pm.response.to.have.status(200);",
+							"});",
+							"",
+							"pm.test(\"Resposta em json\", function () {",
+							"     pm.response.to.be.json;",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
 			"request": {
 				"method": "POST",
 				"header": [
@@ -309,6 +540,30 @@
 		},
 		{
 			"name": "/trajetos",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "a23efe3e-fb74-4fcb-a4de-65dbe333e721",
+						"exec": [
+							"pm.test(\"Status code is 200\", function () {",
+							"    pm.response.to.have.status(200);",
+							"});",
+							"",
+							"pm.test(\"Resposta em json\", function () {",
+							"     pm.response.to.be.json;",
+							"});",
+							"",
+							"// Colocar o valor esperado de itens retornados",
+							"pm.test(\"Contem dados\", function () {",
+							"    var jsonData = pm.response.json();",
+							"    pm.expect(jsonData.dados).to.have.lengthOf(1);",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
 			"request": {
 				"method": "GET",
 				"header": [],
@@ -331,6 +586,24 @@
 		},
 		{
 			"name": "/relatorios/totais",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "862bcf7f-a250-4d6e-9ee3-7241f3024708",
+						"exec": [
+							"pm.test(\"Status code is 200\", function () {",
+							"    pm.response.to.have.status(200);",
+							"});",
+							"",
+							"pm.test(\"Resposta em json\", function () {",
+							"     pm.response.to.be.json;",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
 			"request": {
 				"method": "GET",
 				"header": [],
@@ -354,6 +627,30 @@
 		},
 		{
 			"name": "/relatorios/retornovazio",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "051477fb-0087-4d9e-bced-8880dc3f961c",
+						"exec": [
+							"pm.test(\"Status code is 200\", function () {",
+							"    pm.response.to.have.status(200);",
+							"});",
+							"",
+							"pm.test(\"Resposta em json\", function () {",
+							"     pm.response.to.be.json;",
+							"});",
+							"",
+							"// Colocar o valor esperado de itens retornados",
+							"pm.test(\"Contem dados\", function () {",
+							"    var jsonData = pm.response.json();",
+							"    pm.expect(jsonData.dados).to.have.lengthOf(1);",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
 			"request": {
 				"method": "GET",
 				"header": [],
@@ -377,6 +674,30 @@
 		},
 		{
 			"name": "/relatorios/origemdestino",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "f36a51c3-eff5-4d12-bdf7-ca9a9dd0a502",
+						"exec": [
+							"pm.test(\"Status code is 200\", function () {",
+							"    pm.response.to.have.status(200);",
+							"});",
+							"",
+							"pm.test(\"Resposta em json\", function () {",
+							"     pm.response.to.be.json;",
+							"});",
+							"",
+							"// Colocar o valor esperado de itens retornados",
+							"pm.test(\"Contem dados\", function () {",
+							"    var jsonData = pm.response.json();",
+							"    pm.expect(jsonData.dados).to.have.lengthOf(1);",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
 			"request": {
 				"method": "GET",
 				"header": [],
@@ -393,6 +714,153 @@
 					"path": [
 						"relatorios",
 						"origemdestino"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "/relatorios/carregados/mes/<mes>",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "f5c38c2d-a08f-4829-90a1-8f47abc9810c",
+						"exec": [
+							"pm.test(\"Status code is 200\", function () {",
+							"    pm.response.to.have.status(200);",
+							"});",
+							"",
+							"pm.test(\"Resposta em json\", function () {",
+							"     pm.response.to.be.json;",
+							"});",
+							"",
+							"// Colocar o valor esperado de itens retornados",
+							"pm.test(\"Contem dados\", function () {",
+							"    var jsonData = pm.response.json();",
+							"    pm.expect(jsonData.dados).to.have.lengthOf(1);",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://127.0.0.1:5000/relatorios/carregados/mes/<mes>",
+					"protocol": "http",
+					"host": [
+						"127",
+						"0",
+						"0",
+						"1"
+					],
+					"port": "5000",
+					"path": [
+						"relatorios",
+						"carregados",
+						"mes",
+						"<mes>"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "/relatorios/carregados/semana/<mes>",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "fba99827-81ad-47e0-8f2f-79d0b1a1ac04",
+						"exec": [
+							"pm.test(\"Status code is 200\", function () {",
+							"    pm.response.to.have.status(200);",
+							"});",
+							"",
+							"pm.test(\"Resposta em json\", function () {",
+							"     pm.response.to.be.json;",
+							"});",
+							"",
+							"// Colocar o valor esperado de itens retornados",
+							"pm.test(\"Contem dados\", function () {",
+							"    var jsonData = pm.response.json();",
+							"    pm.expect(jsonData.dados).to.have.lengthOf(1);",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://127.0.0.1:5000/relatorios/carregados/semana/<mes>",
+					"protocol": "http",
+					"host": [
+						"127",
+						"0",
+						"0",
+						"1"
+					],
+					"port": "5000",
+					"path": [
+						"relatorios",
+						"carregados",
+						"semana",
+						"<mes>"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "/relatorios/carregados/dia/<mes>",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "e666812d-868d-4f8e-8076-2b7d8716c12b",
+						"exec": [
+							"pm.test(\"Status code is 200\", function () {",
+							"    pm.response.to.have.status(200);",
+							"});",
+							"",
+							"pm.test(\"Resposta em json\", function () {",
+							"     pm.response.to.be.json;",
+							"});",
+							"",
+							"// Colocar o valor esperado de itens retornados",
+							"pm.test(\"Contem dados\", function () {",
+							"    var jsonData = pm.response.json();",
+							"    pm.expect(jsonData.dados).to.have.lengthOf(1);",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://127.0.0.1:5000/relatorios/carregados/semana/<mes>",
+					"protocol": "http",
+					"host": [
+						"127",
+						"0",
+						"0",
+						"1"
+					],
+					"port": "5000",
+					"path": [
+						"relatorios",
+						"carregados",
+						"semana",
+						"<mes>"
 					]
 				}
 			},

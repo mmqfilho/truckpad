@@ -28,5 +28,14 @@ GOOGLE_KEY
 4 - Executar arquivo para iniciar api\
 python api.py
 
-5 - Utilizar programa Postman para trabalhar com a API:\
+5 - Utilizar programa Postman para trabalhar com a API\
 Importar o arquivo truckpad.postman_collection.json e utilizar os serviços disponíveis
+
+6 - Base de Testes\
+Caso necessário, popular banco de dados com base de testes no arquivo carga_testes.sql
+
+7 - Testes\
+Utilizar o postman (aba de teste de cada serviço) para validar os testes de comunicação e retorno de dados
+
+8 - Jupyter Notebook\
+Foi adicionado o arquivo truckpad.ipynb com testes sibre a base de dados gerada pela API

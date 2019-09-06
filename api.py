@@ -1,9 +1,8 @@
 # coding: utf-8
-import sys, getopt, datetime, googlemaps, json
+import sys, getopt, datetime, googlemaps, json, datetime
 from flask import Flask, request, jsonify
 from flask_mysqldb import MySQL
 from config import *
-from datetime import datetime
 
 app = Flask('truckpad')
 
@@ -26,9 +25,17 @@ def dados_endereco(endereco):
 
 # Formata data em d/m/a
 def formata_data(data):
-    data = datetime.strptime(data, '%Y-%m-%d')
+    data = datetime.datetime.strptime(data, '%Y-%m-%d')
     data = data.strftime('%d/%m/%Y')
     return data
+
+# Calcula idade com uma data aaa-mm-dd
+def calcula_idade(data):
+    d = data.split('-')
+    nasc = datetime.date(int(d[0]), int(d[1]), int(d[2]))
+    hj = datetime.datetime.now().date()     
+    idade = int((hj-nasc).days /365.25)
+    return idade
 
 ## Rotas da API ##
 ##################
@@ -89,7 +96,7 @@ def lista_motoristas():
 
         ret = []
         for d in dados:
-            ret.append({'id': d[0], 'nome': d[2], 'cnh':d[1], 'nascimento': formata_data(str(d[3])), 'sexo': d[4], 'tipo_cnh': d[8], 'possui_veiculo': d[6]})
+            ret.append({'id': d[0], 'nome': d[2], 'cnh':d[1], 'nascimento': formata_data(str(d[3])), 'sexo': d[4], 'tipo_cnh': d[8], 'possui_veiculo': d[6], 'idade': calcula_idade(str(d[3]))})
 
         return jsonify({'total': len(ret), 'dados': ret}), 200, {"Content-Type": "application/json"}
     except Exception as err:
@@ -185,7 +192,7 @@ def dados_motorista(cnh):
 
         ret = []
         for d in dados:
-            ret.append({'id': d[0], 'nome': d[2], 'cnh':d[1], 'nascimento': formata_data(str(d[3])), 'sexo': d[4], 'tipo_cnh': d[8], 'possui_veiculo': d[6]})
+            ret.append({'id': d[0], 'nome': d[2], 'cnh':d[1], 'nascimento': formata_data(str(d[3])), 'sexo': d[4], 'tipo_cnh': d[8], 'possui_veiculo': d[6], 'idade': calcula_idade(str(d[3]))})
 
         return jsonify({'total': len(ret), 'dados': ret}), 200, {"Content-Type": "application/json"}
     except Exception as err:
@@ -305,26 +312,79 @@ def relatorios_retornovazio():
 
     return jsonify({'dados': ret, 'total': len(dados)}), 200, {"Content-Type": "application/json"}
 
-# Relatório de caminhoes carregados
-#@app.route('/relatorios/carregados', methods=['GET'])
-#def relatorios_carregados():
+# Relatório de caminhoes carregados por mes
+@app.route('/relatorios/carregados/mes/<int:mes>', methods=['GET'])
+def relatorios_carregados_mes(mes):
+    cur = mysql.connection.cursor()
+    query = """SELECT count(*)
+                 FROM trajetos
+                WHERE date_format(trajetos_data, '%m') = {}
+                  AND trajetos_esta_carregado = 'S'""".format(mes)
+    cur.execute(query)
+    dados = cur.fetchall()
+
+    return jsonify({'dados': {'total': dados[0][0], 'mes': mes}}), 200, {"Content-Type": "application/json"}
+
+# Relatório de caminhoes carregados de um mes por semana
+@app.route('/relatorios/carregados/semana/<int:mes>', methods=['GET'])
+def relatorios_carregados_semana(mes):
+    ret = []
+    cur = mysql.connection.cursor()
+    query = """SELECT count(*), WEEK(trajetos_data)
+                 FROM trajetos
+                WHERE date_format(trajetos_data, '%m') = {}
+                  AND trajetos_esta_carregado = 'S'
+                GROUP BY WEEK(trajetos_data)
+                ORDER BY WEEK(trajetos_data)""".format(mes)
+    cur.execute(query)
+    dados = cur.fetchall()
+    for (k, d) in enumerate(dados):
+        ret.append({'total': d[0], 'semana_numero': d[1], 'semana_ordem': k+1 })
+
+    return jsonify({'dados': ret, 'mes': mes}), 200, {"Content-Type": "application/json"}
+
+# Relatório de caminhoes carregados de um mes por dia
+@app.route('/relatorios/carregados/dia/<int:mes>', methods=['GET'])
+def relatorios_carregados_dia(mes):
+    ret = []
+    cur = mysql.connection.cursor()
+    query = """SELECT count(*), date_format(trajetos_data, '%d')
+                 FROM trajetos
+                WHERE date_format(trajetos_data, '%m') = {}
+                  AND trajetos_esta_carregado = 'S'
+                GROUP BY date_format(trajetos_data, '%d')
+                ORDER BY date_format(trajetos_data, '%d')""".format(mes)
+    cur.execute(query)
+    dados = cur.fetchall()
+    for d in dados:
+        ret.append({'total': d[0], 'dia': d[1]})
+
+    return jsonify({'dados': ret, 'mes': mes}), 200, {"Content-Type": "application/json"}
 
 # Relatório de origem e destino agrupado por tipo de caminhao
 @app.route('/relatorios/origemdestino', methods=['GET'])
 def relatorios_origemdestino():
-    ret = []
+    total = 0
+    ret = {}
     cur = mysql.connection.cursor()
-    query = """SELECT t.trajetos_id, t.trajetos_data, t.trajetos_origem, t.trajetos_destino, tc.tipo_caminhao_nome, tc.tipo_caminhao_id
-                 FROM trajetos t
-                 JOIN tipo_caminhao tc ON (tc.tipo_caminhao_id = t.tipo_caminhao)
-                GROUP BY tc.tipo_caminhao_nome, t.trajetos_data, t.trajetos_id"""
+    query = """SELECT tipo_caminhao_id, tipo_caminhao_nome 
+                 FROM tipo_caminhao"""
     cur.execute(query)
     dados = cur.fetchall()
-
     for d in dados:
-        ret.append({'trajetos_id': d[0], 'tipo_caminhao_nome': d[4], 'trajetos_data': formata_data(str(d[1])), 'trajetos_origem': d[2], 'trajetos_destino': d[3]})
-
-    return jsonify({'dados': ret, 'total': len(dados)}), 200, {"Content-Type": "application/json"}
+        aux = []
+        query = """SELECT t.trajetos_id, t.trajetos_data, t.trajetos_origem, t.trajetos_destino, tc.tipo_caminhao_nome, tc.tipo_caminhao_id
+                     FROM trajetos t
+                     JOIN tipo_caminhao tc ON (tc.tipo_caminhao_id = t.tipo_caminhao)
+                    WHERE t.tipo_caminhao = {}
+                    GROUP BY tc.tipo_caminhao_nome, t.trajetos_data, t.trajetos_id""".format(d[0])
+        cur.execute(query)
+        dados2 = cur.fetchall()
+        for d2 in dados2:
+            aux.append({'trajetos_id': d2[0], 'tipo_caminhao_nome': d2[4], 'trajetos_data': formata_data(str(d2[1])), 'trajetos_origem': d2[2], 'trajetos_destino': d2[3]})
+        total += len(aux)
+        ret[str(d[1])] = {'caminhoes': aux}
+    return jsonify({'dados': ret, 'total': total}), 200, {"Content-Type": "application/json"}
 
 ## Verifica argumentos de linha de comando ##
 #############################################

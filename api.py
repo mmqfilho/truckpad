@@ -3,6 +3,7 @@ import sys, getopt, datetime, googlemaps, json
 from flask import Flask, request, jsonify
 from flask_mysqldb import MySQL
 from config import *
+from datetime import datetime
 
 app = Flask('truckpad')
 
@@ -15,12 +16,19 @@ app.config['MYSQL_DB'] = DATABASE
 
 mysql = MySQL(app)
 
-## Google API ##
+## Funções ##
 ################
+# Retorna json do google com dados do endereço
 def dados_endereco(endereco):
     gmaps = googlemaps.Client(key=GOOGLE_KEY)
     geocode_result = gmaps.geocode(endereco)
     return geocode_result
+
+# Formata data em d/m/a
+def formata_data(data):
+    data = datetime.strptime(data, '%Y-%m-%d')
+    data = data.strftime('%d/%m/%Y')
+    return data
 
 ## Rotas da API ##
 ##################
@@ -81,7 +89,7 @@ def lista_motoristas():
 
         ret = []
         for d in dados:
-            ret.append({'id': d[0], 'nome': d[2], 'cnh':d[1], 'nascimento': d[3], 'sexo': d[4], 'tipo_cnh': d[8], 'possui_veiculo': d[6]})
+            ret.append({'id': d[0], 'nome': d[2], 'cnh':d[1], 'nascimento': formata_data(str(d[3])), 'sexo': d[4], 'tipo_cnh': d[8], 'possui_veiculo': d[6]})
 
         return jsonify({'total': len(ret), 'dados': ret}), 200, {"Content-Type": "application/json"}
     except Exception as err:
@@ -163,7 +171,7 @@ def atualiza_motorista(cnh):
         mysql.connection.rollback()
         return jsonify({'msg':'Ocorreu um erro ao fazer o cadastrado - {}'.format(str(err))}), 500, {"Content-Type": "application/json"}
 
-# Retorno de dados do Motorista
+# Retorno de dados do Motorista por CNH
 @app.route('/motorista/<cnh>', methods=['GET'])
 def dados_motorista(cnh):
     try:
@@ -177,7 +185,7 @@ def dados_motorista(cnh):
 
         ret = []
         for d in dados:
-            ret.append({'id': d[0], 'nome': d[2], 'cnh':d[1], 'nascimento': d[3], 'sexo': d[4], 'tipo_cnh': d[8], 'possui_veiculo': d[6]})
+            ret.append({'id': d[0], 'nome': d[2], 'cnh':d[1], 'nascimento': formata_data(str(d[3])), 'sexo': d[4], 'tipo_cnh': d[8], 'possui_veiculo': d[6]})
 
         return jsonify({'total': len(ret), 'dados': ret}), 200, {"Content-Type": "application/json"}
     except Exception as err:
@@ -200,7 +208,7 @@ def lista_trajetos():
 
         ret = []
         for d in dados:
-            ret.append({'id': d[0], 'data': d[1], 'carregado':d[2], 'lat_origem': d[3], 'lng_origem': d[4], 'lat_destino': d[5], 'lng_destino': d[6], 'cnh' : d[7], 'nome': d[8], 'tipo_caminhao': d[9], 'endereco_origem': d[10], 'endereco_destino': d[11], 'endereco_origem_google': d[12], 'endereco_destino_google': d[13]})
+            ret.append({'id': d[0], 'data': formata_data(str(d[1])), 'carregado':d[2], 'lat_origem': d[3], 'lng_origem': d[4], 'lat_destino': d[5], 'lng_destino': d[6], 'cnh' : d[7], 'nome': d[8], 'tipo_caminhao': d[9], 'endereco_origem': d[10], 'endereco_destino': d[11], 'endereco_origem_google': d[12], 'endereco_destino_google': d[13]})
 
         return jsonify({'dados': ret, 'total': len(dados)}), 200, {"Content-Type": "application/json"}
     except Exception as err:
@@ -293,7 +301,7 @@ def relatorios_retornovazio():
     dados = cur.fetchall()
 
     for d in dados:
-        ret.append({'motorista_id': d[0], 'cnh': d[1], 'nome':d[2], 'trajeto_id': d[3], 'data': d[4], 'endereco_origem': d[5], 'endereco_destino': d[6]})
+        ret.append({'motorista_id': d[0], 'cnh': d[1], 'nome':d[2], 'trajeto_id': d[3], 'data': formata_data(str(d[4])), 'endereco_origem': d[5], 'endereco_destino': d[6]})
 
     return jsonify({'dados': ret, 'total': len(dados)}), 200, {"Content-Type": "application/json"}
 
@@ -314,7 +322,7 @@ def relatorios_origemdestino():
     dados = cur.fetchall()
 
     for d in dados:
-        ret.append({'trajetos_id': d[0], 'tipo_caminhao_nome': d[4], 'trajetos_data':d[1], 'trajetos_origem': d[2], 'trajetos_destino': d[3]})
+        ret.append({'trajetos_id': d[0], 'tipo_caminhao_nome': d[4], 'trajetos_data': formata_data(str(d[1])), 'trajetos_origem': d[2], 'trajetos_destino': d[3]})
 
     return jsonify({'dados': ret, 'total': len(dados)}), 200, {"Content-Type": "application/json"}
 

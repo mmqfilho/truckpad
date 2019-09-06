@@ -4,7 +4,7 @@
 HOST = 'localhost'
 DATABASE = 'truckpad'
 USER = 'root'
-PASSWORD = 'local'
+PASSWORD = ''
 
 # Google API
 GOOGLE_KEY = ''
